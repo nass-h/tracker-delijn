@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Tracker De Lijn</title>
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  >
+
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div id="map"></div>
+
+    <div id="ui">
+        <div id="toolbar">
+            <div class="brand">
+            <strong>De Lijn Live</strong>
+            <span id="live-indicator">●</span>
+            </div>
+
+            <div class="line-search">
+                <span>Ligne</span>
+
+                <input
+                    id="line-filter"
+                    type="text"
+                    placeholder="Toutes les lignes"
+                    autocomplete="off"
+                >
+
+                <button
+                    id="clear-line"
+                    type="button"
+                    title="Afficher toutes les lignes"
+                >
+                    ×
+                </button>
+
+                <div
+                    id="line-suggestions"
+                    class="line-suggestions"
+                ></div>
+            </div>
+
+            <span id="vehicle-count"></span>
+        </div>
+
+        <div id="zoom-message">
+            Zoomez pour afficher les véhicules
+        </div>
+
+        <div id="status">
+            Chargement…
+        </div>
+    </div>
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    ></script>
+
+    <script src="/app.js"></script>
+</body>
+</html>
