@@ -191,13 +191,24 @@ function popupContent(vehicle) {
 
       <div class="popup-row">
         <span>Véhicule</span>
-        <strong>${escapeHtml(vehicle.id)}</strong>
+
+        <strong>
+          <a
+            class="vehicle-link"
+            href="https://www.zone01.be/hercules/resultaten?q=${encodeURIComponent(vehicle.id)}"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Voir le véhicule ${escapeHtml(vehicle.id)} sur Zone01"
+          >
+            ${escapeHtml(vehicle.id)}
+          </a>
+        </strong>
       </div>
 
-      <div class="popup-row">
+      <small class="popup-updated">
         <span>Mise à jour</span>
         <strong>${updated}</strong>
-      </div>
+      </small>
     </div>
   `;
 }
@@ -208,6 +219,50 @@ function clearMarkers() {
   }
 
   markers.clear();
+}
+
+function focusVehicle(vehicleId) {
+  const vehicle =
+    vehicles.find(
+      (item) =>
+        item.id === vehicleId
+    );
+
+  if (!vehicle) {
+    return;
+  }
+
+  const marker =
+    markers.get(vehicle.id);
+
+  if (!marker) {
+    return;
+  }
+
+  /*
+   * Affiche le tracé exact du véhicule.
+   */
+  showVehicleRoute(vehicle);
+
+  /*
+   * Centre et zoome sur le véhicule.
+   */
+  map.setView(
+    [
+      vehicle.latitude,
+      vehicle.longitude,
+    ],
+    Math.max(
+      map.getZoom(),
+      15
+    )
+  );
+
+  /*
+   * Ouvre la même popup que lors
+   * d'un clic sur le marqueur.
+   */
+  marker.openPopup();
 }
 
 function renderVehicles() {
@@ -223,7 +278,9 @@ function renderVehicles() {
     zoomMessage.style.display = "block";
 
     countElement.textContent =
-      `${vehicles.length} véhicules disponibles`;
+    `${visibleVehicles.length} véhicules affichés${
+      selectedLine ? " ▾" : ""
+    }`;
 
     return;
   }

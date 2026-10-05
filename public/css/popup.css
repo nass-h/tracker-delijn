@@ -1,0 +1,169 @@
+.vehicle-popup {
+  min-width: 220px;
+
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+
+/* ---------- EN-TÊTE ---------- */
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-bottom: 6px;
+}
+
+.popup-line {
+  padding: 4px 7px;
+
+  background: #ffd800;
+  color: #111;
+
+  border-radius: 5px;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.popup-line-button {
+  border: 0;
+
+  cursor: pointer;
+  font: inherit;
+}
+
+.popup-line-button:hover {
+  filter: brightness(0.92);
+}
+
+.popup-line-button:active {
+  transform: scale(0.96);
+}
+
+.popup-destination {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.popup-route {
+  color: #666;
+
+  font-size: 12px;
+}
+
+
+/* ---------- PROCHAIN PASSAGE ---------- */
+
+.next-stop {
+  margin: 12px 0;
+  padding: 10px;
+
+  background: #f4f4f4;
+
+  border-radius: 7px;
+}
+
+.next-stop-label {
+  margin-bottom: 3px;
+
+  color: #777;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+.next-stop-name {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.times {
+  margin-top: 8px;
+}
+
+.time-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 3px;
+
+  font-size: 13px;
+}
+
+.time-row span {
+  color: #666;
+}
+
+.time-row strong {
+  font-size: 14px;
+}
+
+.delay,
+.early,
+.on-time {
+  margin-left: 5px;
+
+  font-size: 11px;
+}
+
+.delay {
+  color: #c0392b;
+}
+
+.early {
+  color: #1565c0;
+}
+
+.on-time {
+  color: #188038;
+}
+
+
+/* ---------- INFORMATIONS ---------- */
+
+.vehicle-popup hr {
+  margin: 10px 0;
+
+  border: 0;
+  border-top: 1px solid #ddd;
+}
+
+.popup-row {
+  display: flex;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin: 5px 0;
+
+  font-size: 13px;
+}
+
+.popup-row span {
+  color: #666;
+}
+
+.vehicle-link {
+  color: inherit;
+
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.vehicle-link:hover {
+  opacity: 0.7;
+}
+
+.popup-updated {
+  opacity: 0.65;
+}
