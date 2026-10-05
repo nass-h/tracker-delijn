@@ -278,9 +278,7 @@ function renderVehicles() {
     zoomMessage.style.display = "block";
 
     countElement.textContent =
-    `${visibleVehicles.length} véhicules affichés${
-      selectedLine ? " ▾" : ""
-    }`;
+      `${vehicles.length} véhicules disponibles`;
 
     return;
   }
@@ -400,6 +398,10 @@ function renderVehicles() {
     );
   }
 
+  /*
+   * Supprime les marqueurs qui ne doivent
+   * plus être affichés.
+   */
   for (
     const [vehicleId, marker]
     of markers
@@ -410,15 +412,10 @@ function renderVehicles() {
     }
   }
 
+  // Compteur de véhicules
   countElement.textContent =
-    `${visibleVehicles.length} véhicule${
-      visibleVehicles.length !== 1
-        ? "s"
-        : ""
-    } affiché${
-      visibleVehicles.length !== 1
-        ? "s"
-        : ""
+    `${visibleVehicles.length} véhicules affichés${
+      selectedLine ? " ▾" : ""
     }`;
 }
 

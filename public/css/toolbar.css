@@ -159,3 +159,43 @@
 
   white-space: nowrap;
 }
+
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+  #toolbar {
+    top: 8px;
+    left: 8px;
+    right: 8px;
+
+    transform: none;
+
+    gap: 8px;
+
+    padding: 7px 9px;
+  }
+
+  .brand strong {
+    font-size: 13px;
+  }
+
+  .line-search {
+    flex: 1;
+  }
+
+  .line-search > span {
+    display: none;
+  }
+
+  #line-filter {
+    width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
+  }
+
+  #vehicle-count {
+    font-size: 11px;
+  }
+}

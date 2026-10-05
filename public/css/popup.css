@@ -167,3 +167,21 @@
 .popup-updated {
   opacity: 0.65;
 }
+
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+  .vehicle-popup {
+    min-width: 0;
+  }
+
+  .popup-destination {
+    font-size: 14px;
+  }
+
+  .next-stop {
+    margin: 9px 0;
+    padding: 8px;
+  }
+}

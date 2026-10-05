@@ -121,3 +121,24 @@
 .line-vehicle-button:hover {
   background: #ddd;
 }
+
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+  #line-vehicles {
+    left: 8px;
+    right: 8px;
+
+    grid-template-columns:
+      repeat(3, 1fr);
+
+    max-height: 50vh;
+  }
+
+  .line-vehicle-button {
+    min-height: 36px;
+
+    font-size: 12px;
+  }
+}

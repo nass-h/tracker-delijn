@@ -71,3 +71,26 @@ body {
 
   pointer-events: none;
 }
+
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+  #status {
+    top: auto;
+    right: 8px;
+    bottom: 8px;
+
+    padding: 5px 8px;
+
+    font-size: 11px;
+  }
+
+  #zoom-message {
+    top: 115px;
+
+    max-width: calc(100vw - 30px);
+
+    text-align: center;
+  }
+}
