@@ -7,10 +7,6 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const API_KEY = process.env.DELIJN_REALTIME_API_KEY;
-
-const VEHICLE_POSITIONS_URL =
-  "https://api.delijn.be/gtfs/v3/realtime?position=true";
-
 if (!API_KEY) {
   console.error("❌ DELIJN_REALTIME_API_KEY manquante dans .env");
   process.exit(1);
