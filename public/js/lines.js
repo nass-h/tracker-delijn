@@ -16,6 +16,88 @@ function getAvailableLines() {
   );
 }
 
+function renderLineVehicles() {
+  lineVehiclesElement.innerHTML = "";
+
+  if (!selectedLine) {
+    lineVehiclesElement.style.display =
+      "none";
+
+    countElement.classList.remove(
+      "clickable"
+    );
+
+    return;
+  }
+
+  const lineVehicles =
+    vehicles
+      .filter(
+        (vehicle) =>
+          vehicle.line ===
+          selectedLine
+      )
+      .sort(
+        (a, b) =>
+          String(a.id).localeCompare(
+            String(b.id),
+            "fr",
+            {
+              numeric: true,
+            }
+          )
+      );
+
+  if (!lineVehicles.length) {
+    lineVehiclesElement.style.display =
+      "none";
+
+    countElement.classList.remove(
+      "clickable"
+    );
+
+    return;
+  }
+
+  countElement.classList.add(
+    "clickable"
+  );
+
+  for (const vehicle of lineVehicles) {
+    const button =
+      document.createElement(
+        "button"
+      );
+
+    button.type = "button";
+
+    button.className =
+      "line-vehicle-button";
+
+    button.textContent =
+      vehicle.id;
+
+    button.title =
+      `Afficher le véhicule ${vehicle.id}`;
+
+    button.addEventListener(
+      "click",
+      () => {
+        lineVehiclesElement.style.display =
+          "none";
+
+        focusVehicle(
+          vehicle.id
+        );
+      }
+    );
+
+    lineVehiclesElement.appendChild(
+      button
+    );
+  }
+}
+
 function showLineSuggestions() {
   const query =
     lineFilter.value
@@ -75,6 +157,7 @@ function selectLine(line) {
   if (!selectedLine) {
     clearRoute();
     renderVehicles();
+    renderLineVehicles();
     return;
   }
 
@@ -87,17 +170,19 @@ function selectLine(line) {
   if (!lineVehicles.length) {
     clearRoute();
     renderVehicles();
+    renderLineVehicles();
     return;
   }
 
   /*
-   * On affiche les véhicules immédiatement.
-   */
+  * On affiche les véhicules immédiatement.
+  */
   renderVehicles();
+  renderLineVehicles();
 
   /*
-   * Puis les tracés de la ligne.
-   */
+  * Puis les tracés de la ligne.
+  */
   showLineRoutes(lineVehicles);
 
   /*
@@ -134,6 +219,7 @@ lineFilter.addEventListener(
 
       clearRoute();
       renderVehicles();
+      renderLineVehicles();
     }
 
     showLineSuggestions();
@@ -200,6 +286,36 @@ document.addEventListener(
       lineSuggestions.style.display =
         "none";
     }
+
+    if (
+      !lineVehiclesElement.contains(
+        event.target
+      ) &&
+      event.target !== countElement
+    ) {
+      lineVehiclesElement.style.display =
+        "none";
+    }
+  }
+);
+
+countElement.addEventListener(
+  "click",
+  (event) => {
+    if (!selectedLine) {
+      return;
+    }
+
+    event.stopPropagation();
+
+    const isOpen =
+      lineVehiclesElement.style.display ===
+      "grid";
+
+    lineVehiclesElement.style.display =
+      isOpen
+        ? "none"
+        : "grid";
   }
 );
 

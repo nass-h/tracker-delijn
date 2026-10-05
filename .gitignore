@@ -3,3 +3,4 @@ package-lock.json
 
 gtfs_transit/
 gtfs_transit.zip
+.gtfs-cache

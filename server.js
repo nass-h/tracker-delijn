@@ -3,6 +3,11 @@ require("dotenv").config();
 const express = require("express");
 const GtfsRealtimeBindings = require("gtfs-realtime-bindings");
 
+const REALTIME_CACHE_TTL = 5000;
+let realtimeCache = null;
+let realtimeCacheTime = 0;
+let realtimeRequest = null;
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -24,28 +29,80 @@ const {
 
 
 async function fetchRealtime() {
+  const now = Date.now();
+
+  /*
+   * Snapshot récent déjà disponible.
+   */
+  if (
+    realtimeCache &&
+    now - realtimeCacheTime <
+      REALTIME_CACHE_TTL
+  ) {
+    return realtimeCache;
+  }
+
+
+  /*
+   * Une requête est déjà en cours.
+   *
+   * Utile si plusieurs navigateurs
+   * appellent /api/vehicles simultanément :
+   * ils attendent tous la même requête.
+   */
+  if (realtimeRequest) {
+    return realtimeRequest;
+  }
+
+
+  realtimeRequest =
+    fetchRealtimeFromDelijn();
+
+  try {
+    const feed =
+      await realtimeRequest;
+
+    realtimeCache = feed;
+    realtimeCacheTime =
+      Date.now();
+
+    return feed;
+
+  } finally {
+    realtimeRequest = null;
+  }
+}
+
+async function fetchRealtimeFromDelijn() {
   const url =
     "https://api.delijn.be/gtfs/v3/realtime" +
     "?position=true&delay=true&tripid=true&vehicleid=true";
 
-  const response = await fetch(url, {
-    headers: {
-      "Ocp-Apim-Subscription-Key":
-        process.env.DELIJN_REALTIME_API_KEY,
-    },
-  });
+  const response =
+    await fetch(url, {
+      headers: {
+        "Ocp-Apim-Subscription-Key":
+          process.env
+            .DELIJN_REALTIME_API_KEY,
+      },
+    });
+
 
   if (!response.ok) {
-    const body = await response.text();
+    const body =
+      await response.text();
 
     throw new Error(
       `De Lijn Realtime HTTP ${response.status}: ${body}`
     );
   }
 
-  const buffer = Buffer.from(
-    await response.arrayBuffer()
-  );
+
+  const buffer =
+    Buffer.from(
+      await response.arrayBuffer()
+    );
+
 
   return GtfsRealtimeBindings
     .transit_realtime

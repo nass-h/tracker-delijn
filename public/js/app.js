@@ -28,6 +28,11 @@ const lineSuggestions =
     "line-suggestions"
   );
 
+const lineVehiclesElement =
+  document.getElementById(
+    "line-vehicles"
+  );
+
 let vehicles = [];
 
 async function updateVehicles() {
@@ -48,8 +53,10 @@ async function updateVehicles() {
       await response.json();
 
     vehicles = data.vehicles;
-
     renderVehicles();
+    if (selectedLine) {
+      renderLineVehicles();
+    }
 
     statusElement.textContent =
       `Mis à jour à ${
