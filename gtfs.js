@@ -18,6 +18,7 @@ const routes = new Map();
 const trips = new Map();
 const stops = new Map();
 const shapes = new Map();
+const routeShapeIds = new Map();
 
 
 function readCsv(zip, filename) {
@@ -82,7 +83,33 @@ async function loadGtfs(apiKey) {
   const tripRows = readCsv(zip, "trips.txt");
 
   for (const trip of tripRows) {
-    trips.set(trip.trip_id, trip);
+    trips.set(
+      trip.trip_id,
+      trip
+    );
+
+    if (
+      trip.route_id &&
+      trip.shape_id
+    ) {
+      let shapeIds =
+        routeShapeIds.get(
+          trip.route_id
+        );
+
+      if (!shapeIds) {
+        shapeIds = new Set();
+
+        routeShapeIds.set(
+          trip.route_id,
+          shapeIds
+        );
+      }
+
+      shapeIds.add(
+        trip.shape_id
+      );
+    }
   }
 
   console.log(`🚍 ${trips.size} trajets`);
@@ -181,18 +208,12 @@ async function loadShapes() {
 }
 
 function getShapeIdsForRoute(routeId) {
-  const shapeIds = new Set();
-
-  for (const trip of trips.values()) {
-    if (
-      trip.route_id === routeId &&
-      trip.shape_id
-    ) {
-      shapeIds.add(trip.shape_id);
-    }
-  }
-
-  return [...shapeIds];
+  return [
+    ...(
+      routeShapeIds.get(routeId) ||
+      []
+    ),
+  ];
 }
 
 function getShape(shapeId) {
