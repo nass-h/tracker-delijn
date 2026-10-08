@@ -1,6 +1,24 @@
-node_modules
-package-lock.json
+# Dependencies
+node_modules/
 
-gtfs_transit/
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# GTFS downloaded/generated data
 gtfs_transit.zip
-.gtfs-cache
+.gtfs-cache/
+
+# Temporary files
+*.tmp
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
