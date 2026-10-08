@@ -26,5 +26,6 @@
     "express": "^5.2.1",
     "gtfs-realtime-bindings": "^2.2.0",
     "unzipper": "^0.12.5"
-  }
+  },
+  "devDependencies": {}
 }
