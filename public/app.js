@@ -21,6 +21,11 @@ const clearLineButton = document.getElementById("clear-line");
 const lineSuggestions = document.getElementById("line-suggestions");
 let selectedLine = "";
 
+const lineVehiclesElement =
+  document.getElementById(
+    "line-vehicles"
+  );
+
 const zoomMessage = document.getElementById("zoom-message");
 
 const markers = new Map();
